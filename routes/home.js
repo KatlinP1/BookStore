@@ -1,19 +1,15 @@
 //shop.ejs fileiga seotud 
-const path = require('path');
-const rootDirectory = require('../utilities/path');
+//const path = require('path');
+//const rootDirectory = require('../utilities/path');
 const express = require('express');
-const adminData = require('./admin');
+//const adminData = require('./admin');
 const router = express.Router();
+const productController = require('../controllers/products');
+//mini express app pluggable to another express app
 
-router.get('/', (req, res) =>{
-    const products = adminData.products;
-    
-    res.render('shop.ejs', {
-        productsMain: products,
-        pageTitle: 'Main page',
-        path: '/'
-    });
-    //res.sendFile(path.join(rootDirectory, 'views', 'shop.html'));
-});
+router.get('/', productController.getProducts);
+router.get('/products');
+router.get('/cart');
+router.get('/checkout');
 
 module.exports = router;

@@ -1,8 +1,8 @@
 const express = require('express');
-const path = require('path');
+//const path = require('path');
 const ejs = require('ejs');
 const bodyParser = require('body-parser');
-const rootDirectory = require('./utilities/path');
+//const rootDirectory = require('./utilities/path');
 const homeRouter = require('./routes/home');
 const adminRouter = require('./routes/admin');
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.static('public'));
 
 app.use('/', homeRouter);
 
-app.use('/admin', adminRouter.router); //admin- is a filter
+app.use('/admin', adminRouter); //admin- is a filter
 //app use on handler- haldab kõiki http meetodid
 
 app.use((req, res) =>{
