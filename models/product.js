@@ -2,8 +2,19 @@ const fs = require('fs');
 const path = require('path');
 const filePath = path.join(path.dirname(require.main.filename), 'data', 'products.json');
 
+const getProductsfromfile = (cb) => {
+    fs.readFile(filePath, (error, fileContent) =>{
+        if(error){
+           return cb ([]);
+        }
+        
+        cb(JSON.parse(fileContent));
+    });
+}
+
 module.exports = class Product {
-    constructor(title, url, price, description) {
+    constructor(id, title, url, price, description) {
+        this.id = id;
         this.title = title;
         this.imageUrl = url;
         this.price = price;
@@ -11,28 +22,38 @@ module.exports = class Product {
     }
 
     save(){ //uue info salvestamine - save to products.json
-        fs.readFile(filePath, (error, fileContent) =>{
-            let products = [];
+        
+        getProductsfromfile(products => {
+            if(this.id){ // if product with this id exists 
+                 const existingProductIndex = products.findIndex(product => product.id === this.id);
+                 const updatedProducts = [...products]; //pull out existing products and store them in a new array - spreadoperator
+                 updatedProducts [existingProductIndex] = this;
+                 fs.writeFile(filePath, JSON.stringify(updatedProducts), (error) => {
+                     console.log(error);
+                 });
+                } else {
+                    this.id = Math.random().toString();
+                    products.push(this);
+                    fs.writeFile(filePath, JSON.stringify(products), (error) =>{
+                    console.log(error);
+                    }); 
 
-            if(!error){
-                products = JSON.parse(fileContent);
-            }
-            products.push(this);
-            fs.writeFile(filePath, JSON.stringify(products), (error) =>{
-                console.log(error);
-            }); 
-
+                 }
+            
         }); //faili maha lugemiseks- et kuvada eelnevat infot 
+
     }
 
     //cb- objekt mis salvest andmed mis toimub funktsiooni sees
     static fetchAll(cb){
-        fs.readFile(filePath, (error, fileContent) =>{
-            if(error){
-                cb ([]);
-            }
-            
-            cb(JSON.parse(fileContent));
+       getProductsfromfile(cb);
+    }
+
+    static findById(id, cb){
+        getProductsfromfile(products => {
+            //filter a product by its id
+            const product = products.find(p => p.id === id);
+            cb(product);
         });
 
     }
