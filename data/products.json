@@ -1,1 +1,16 @@
-[{"title":"book one","imageUrl":"https://thumbs-prod.si-cdn.com/ufPRE9RHUDHqQdOsLvYHhJAxy1k=/fit-in/1600x0/https://public-media.si-cdn.com/filer/91/91/91910c23-cae4-46f8-b7c9-e2b22b8c1710/lostbook.jpg","price":"20","description":"book 1","id":"0.22248064879931895"},{"id":"0.29939770042146363","title":"book two","imageUrl":"https://thumbs-prod.si-cdn.com/ufPRE9RHUDHqQdOsLvYHhJAxy1k=/fit-in/1600x0/https://public-media.si-cdn.com/filer/91/91/91910c23-cae4-46f8-b7c9-e2b22b8c1710/lostbook.jpg","price":"12","description":"book 2 updated"},{"id":"0.09448547241067273","title":"book 3","imageUrl":"https://thumbs-prod.si-cdn.com/ufPRE9RHUDHqQdOsLvYHhJAxy1k=/fit-in/1600x0/https://public-media.si-cdn.com/filer/91/91/91910c23-cae4-46f8-b7c9-e2b22b8c1710/lostbook.jpg","price":"250","description":"book 3"}]
+[
+    {
+        "id": "0.4196040037422719",
+        "title": "book one",
+        "imageUrl": "https://thumbs-prod.si-cdn.com/ufPRE9RHUDHqQdOsLvYHhJAxy1k=/fit-in/1600x0/https://public-media.si-cdn.com/filer/91/91/91910c23-cae4-46f8-b7c9-e2b22b8c1710/lostbook.jpg",
+        "price": "5",
+        "description": "book one"
+    },
+    {
+        "id": "0.6110894752389164",
+        "title": "book two",
+        "imageUrl": "https://thumbs-prod.si-cdn.com/ufPRE9RHUDHqQdOsLvYHhJAxy1k=/fit-in/1600x0/https://public-media.si-cdn.com/filer/91/91/91910c23-cae4-46f8-b7c9-e2b22b8c1710/lostbook.jpg",
+        "price": "10",
+        "description": "book two"
+    }
+]
