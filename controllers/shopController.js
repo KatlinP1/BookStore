@@ -82,3 +82,28 @@ exports.postDeleteFromCart = (req, res) =>{
         console.log('Failed to delete an item from cart');
     });
 }
+
+exports.postOrder = (req, res) => {
+    req.user.addOrder()
+    .then(result => {
+        res.redirect('/orders');
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+}
+
+exports.getOrders = (req, res) => {
+    req.user.getOrders()
+    .then(orders => {
+        res.render('shop/orders.ejs', {
+            path: '/orders',
+            pageTitle: 'Your Orders',
+            orders: orders
+        });
+    })
+    .catch(error => {
+        console.log(error);
+    });
+}
