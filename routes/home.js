@@ -7,6 +7,7 @@ const router = express.Router();
 const shopController = require('../controllers/shopController'); //../controllers/products
 //mini express app pluggable to another express app
 
+
 router.get('/', shopController.getProducts);
 router.get('/products', shopController.getProducts);
 router.get('/products/:productId', shopController.getProduct);

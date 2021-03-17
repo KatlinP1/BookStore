@@ -1,9 +1,10 @@
 //controller for all product - related logic 
 const Product = require('../models/product');
 const Cart = require('../models/cart');
+const Order = require('../models/order');
 
 exports.getProducts = (req, res) =>{
-    Product.fetchAll()
+    Product.find()
     .then(products => {
         //const products = adminData.products;
         res.render('shop/product-list.ejs', {
@@ -33,16 +34,18 @@ exports.getProduct = (req, res) => {
 }
 
 exports.getCart = (req, res) =>{
-    req.user.getCart()
-    .then(products => {
+    req.user.populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+        const products = user.cart.items;
         res.render('shop/cart.ejs', {
-            path: '/cart', 
-            pageTitle: 'Your cart', 
+            path: '/cart',
+            pageTitle: 'Your cart',
             products: products
         });
     })
-    .catch(error =>{
-        console.log('Failed to fetch the cart');
+    .catch(error => {
+        console.log(error);
     });
 
     /*Cart.getCart(cart => {
@@ -63,7 +66,7 @@ exports.postCart = (req, res) => {
     const productId = req.body.productId;
     Product.findById(productId)
     .then(product => {
-        req.user.addToCart(product);
+        return req.user.addToCart(product);
     })
     .then(result => {
         console.log("product saved to cart");
@@ -84,8 +87,27 @@ exports.postDeleteFromCart = (req, res) =>{
 }
 
 exports.postOrder = (req, res) => {
-    req.user.addOrder()
-    .then(result => {
+    req.user
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+        const products = user.cart.items.map(i => {
+            return {qty: i.qty, product: {...i.productId._doc}};
+        });
+        const order = new Order({
+            user: {
+                name: req.user.name,
+                userId: req.user
+            },
+            products: products
+        });
+
+        return order.save();
+    })
+    .then(()=>{
+        return req.user.clearCart();
+    })
+    .then(() => {
         res.redirect('/orders');
     })
     .catch(error => {
@@ -95,7 +117,7 @@ exports.postOrder = (req, res) => {
 }
 
 exports.getOrders = (req, res) => {
-    req.user.getOrders()
+    Order.find({'user.userId': req.user._id})
     .then(orders => {
         res.render('shop/orders.ejs', {
             path: '/orders',
