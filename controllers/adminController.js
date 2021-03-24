@@ -5,7 +5,8 @@ exports.getAddProduct = (req, res) =>{
     res.render('admin/edit-product.ejs', {
         pageTitle: 'Add Product',
         path: '/admin/add-product',
-        editing: false
+        editing: false, 
+        isAuthenticated: req.session.isLoggedIn
     });
 //res.sendFile(path.join(rootDirectory, 'views', 'add-product.html'));
 //res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html'));
@@ -56,7 +57,8 @@ exports.getEditProduct = (req, res) =>{
             pageTitle: 'Edit product',
             path: 'admin/edit-product',
             editing: editMode,
-            product: product
+            product: product, 
+            isAuthenticated: req.session.isLoggedIn
         });
     })
     .catch(error => {
@@ -102,7 +104,8 @@ exports.getProducts = (req, res) => {
             {
                 products: products, 
                 pageTitle: 'Admin Products',
-                path: '/admin/products'
+                path: '/admin/products', 
+                isAuthenticated: req.session.isLoggedIn
             }
         );
     })
