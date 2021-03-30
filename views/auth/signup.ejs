@@ -11,7 +11,7 @@
         <div class="user-message"> <%= errorMessage %></div>
     <% } %>
 
-  <form action="/login" class="login-form" method="POST">
+  <form action="/signup" class="login-form" method="POST">
     <div class="form-control">
         <label for="email">Email</label>
         <input type="email" name="email" id="email">
@@ -21,10 +21,15 @@
         <label for="password">Password</label>
         <input type="password" name="password" id="password">
     </div>
+
+    <div class="form-control">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" name="confirmPassword" id="confirmPassword">
+    </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <button class="btn" type="submit">Login</button>
+    <button class="btn" type="submit">Sign up</button>
 
 
 </form>
 
-<%- include('../includes/end.ejs') %>    
+<%- include('../includes/end.ejs') %>   

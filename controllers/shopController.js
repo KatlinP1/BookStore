@@ -2,6 +2,7 @@
 const Product = require('../models/product');
 const Cart = require('../models/cart');
 const Order = require('../models/order');
+//const csurf = require('csurf');
 
 exports.getProducts = (req, res) =>{
     Product.find()
@@ -11,7 +12,8 @@ exports.getProducts = (req, res) =>{
         products: products,
         pageTitle: 'All products',
         path: '/products', 
-        isAuthenticated: req.session.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn,
+        csrfToken: req.csrfToken()
         });
         //res.sendFile(path.join(rootDirectory, 'views', 'shop.html'));
     })
